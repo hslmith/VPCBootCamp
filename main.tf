@@ -17,26 +17,6 @@ resource "ibm_is_vpc" "vpc1" {
   address_prefix_management = "manual"
 }
 
-##############################################################################
-# Create VPC CIDR and Zone Prefixes
-##############################################################################
-
-
-resource "ibm_is_vpc_address_prefix" "prefix1" {
-  name = "az1-prefix01"
-  zone = "us-south-1"
-  vpc  = ibm_is_vpc.vpc1.id
-  cidr = "${var.zone1_prefix}"
-}
-
-
-resource "ibm_is_vpc_address_prefix" "prefix2" {
-  name = "az2-prefix01"
-  zone = "us-south-2"
-  vpc  = ibm_is_vpc.vpc1.id
-  cidr = "${var.zone2_prefix}"
-}
-
 
 
 ##############################################################################
