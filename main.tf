@@ -87,5 +87,10 @@ resource "ibm_is_public_gateway" "pubgw-zone1" {
 ##############################################################################
 
 
-
-
+resource "ibm_is_vpc_address_prefix" "prefix_z1" {
+  name = "vpc-zone1-cidr"
+  zone = var.zone1
+  vpc  = ibm_is_vpc.vpc1.id
+  cidr = var.zone1_prefix
+  is_default  = true
+}
