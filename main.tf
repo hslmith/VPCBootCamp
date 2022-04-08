@@ -211,6 +211,7 @@ resource "ibm_is_instance" "web-instancez02" {
   vpc  = ibm_is_vpc.vpc1.id
   zone = var.zone2
   keys = ["${data.ibm_is_ssh_key.sshkey1.id}"]
+  user_data = "${file("install_apache.sh")}"
   #user_data = "${data.local_file.cloud-config-web-txt.content}
 }
 
