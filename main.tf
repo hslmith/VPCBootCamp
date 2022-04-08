@@ -147,9 +147,9 @@ resource "ibm_is_subnet" "dbsubnet2" {
 
 
 
-/////////////////////
-//   ZONE 1 (L)
-/////////////////////
+##############################################################################
+# ZONE 1 (L)
+##############################################################################
 
 
 #--- Web Server(s)
@@ -168,4 +168,68 @@ resource "ibm_is_instance" "web-instancez01" {
   zone = var.zone1
   keys = ["${data.ibm_is_ssh_key.sshkey1.id}"]
   #user_data = "${data.local_file.cloud-config-web-txt.content}
+}
+
+
+#--- DB Server(s) 
+
+
+resource "ibm_is_instance" "db-instancez01" {
+  count   = var.db_server_count
+  name    = "dbz01-${count.index+1}"
+  image   = var.image
+  profile = var.profile
+
+  primary_network_interface = {
+    subnet = ibm_is_subnet.dbsubnet1.id
+    security_groups = ["${ibm_is_security_group.private_facing_sg.id}"]
+  }
+  vpc  = ibm_is_vpc.vpc1.id
+  zone = var.zone1
+  keys = ["${data.ibm_is_ssh_key.sshkey1.id}"]
+  #user_data = "${data.template_cloudinit_config.cloud-init-apptier.rendered}"
+}
+
+
+
+##############################################################################
+# ZONE 2 (R)
+##############################################################################
+
+#--- Web Server(s)
+
+resource "ibm_is_instance" "web-instancez02" {
+  count   = var.web_server_count
+  name    = "webz02-${count.index+1}"
+  image   = var.image
+  profile = var.profile
+
+  primary_network_interface = {
+    subnet = ibm_is_subnet.websubnet2.id
+    security_groups = ["${ibm_is_security_group.public_facing_sg.id}"]
+  }
+  vpc  = ibm_is_vpc.vpc1.id
+  zone = var.zone2
+  keys = ["${data.ibm_is_ssh_key.sshkey1.id}"]
+  #user_data = "${data.local_file.cloud-config-web-txt.content}
+}
+
+
+#--- DB Server(s) 
+
+
+resource "ibm_is_instance" "db-instancez02" {
+  count   = var.db_server_count
+  name    = "dbz01-${count.index+1}"
+  image   = var.image
+  profile = var.profile
+
+  primary_network_interface = {
+    subnet = ibm_is_subnet.dbsubnet2.id
+    security_groups = ["${ibm_is_security_group.private_facing_sg.id}"]
+  }
+  vpc  = ibm_is_vpc.vpc1.id
+  zone = var.zone2
+  keys = ["${data.ibm_is_ssh_key.sshkey1.id}"]
+  #user_data = "${data.template_cloudinit_config.cloud-init-apptier.rendered}"
 }
