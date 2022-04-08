@@ -106,6 +106,7 @@ resource "ibm_is_vpc_address_prefix" "prefix_z2" {
 ##############################################################################
 # Subnets for Zone 1 & Zone 2
 ##############################################################################
+
 #--- subnets for web and db tier zone 1
 
 resource "ibm_is_subnet" "websubnet1" {
@@ -142,4 +143,29 @@ resource "ibm_is_subnet" "dbsubnet2" {
   zone            = "${var.zone2}"
   ipv4_cidr_block = "${var.db_subnet_zone2}"
   depends_on      = ["ibm_is_vpc_address_prefix.prefix_z2"]
+}
+
+
+
+/////////////////////
+//   ZONE 1 (L)
+/////////////////////
+
+
+#--- Web Server(s)
+
+resource "ibm_is_instance" "web-instancez01" {
+  count   = var.web_server_count
+  name    = "webz01-${count.index+1}"
+  image   = var.image
+  profile = var.profile
+
+  primary_network_interface = {
+    subnet = ibm_is_subnet.websubnet1.id
+    security_groups = ["${ibm_is_security_group.public_facing_sg.id}"]
+  }
+  vpc  = ibm_is_vpc.vpc1.id
+  zone = var.zone1
+  keys = ["${data.ibm_is_ssh_key.sshkey1.id}"]
+  #user_data = "${data.local_file.cloud-config-web-txt.content}
 }
