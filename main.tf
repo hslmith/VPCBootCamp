@@ -160,7 +160,7 @@ resource "ibm_is_instance" "web-instancez01" {
   image   = var.image
   profile = var.profile
 
-  primary_network_interface = {
+  primary_network_interface {
     subnet = ibm_is_subnet.websubnet1.id
     security_groups = ["${ibm_is_security_group.public_facing_sg.id}"]
   }
@@ -180,7 +180,7 @@ resource "ibm_is_instance" "db-instancez01" {
   image   = var.image
   profile = var.profile
 
-  primary_network_interface = {
+  primary_network_interface  {
     subnet = ibm_is_subnet.dbsubnet1.id
     security_groups = ["${ibm_is_security_group.private_facing_sg.id}"]
   }
@@ -204,7 +204,7 @@ resource "ibm_is_instance" "web-instancez02" {
   image   = var.image
   profile = var.profile
 
-  primary_network_interface = {
+  primary_network_interface {
     subnet = ibm_is_subnet.websubnet2.id
     security_groups = ["${ibm_is_security_group.public_facing_sg.id}"]
   }
@@ -225,7 +225,7 @@ resource "ibm_is_instance" "db-instancez02" {
   image   = var.image
   profile = var.profile
 
-  primary_network_interface = {
+  primary_network_interface {
     subnet = ibm_is_subnet.dbsubnet2.id
     security_groups = ["${ibm_is_security_group.private_facing_sg.id}"]
   }
