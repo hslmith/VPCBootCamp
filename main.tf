@@ -82,29 +82,4 @@ resource "ibm_is_public_gateway" "pubgw-zone1" {
 }
 
 
-##############################################################################
-# Prefixes for Zone 1 & Zone 2
-##############################################################################
-
-
-
-//--- address prexix for zone 1
-
-resource "ibm_is_vpc_address_prefix" "prefix_z1" {
-  name = "vpc-zone1-cidr"
-  zone = "${var.zone1}"
-  vpc  = "${ibm_is_vpc.vpc1.id}"
-  cidr = "${var.zone1_prefix}"
-}
-
-
-/--- address prexix for zone 2
-
-resource "ibm_is_vpc_address_prefix" "prefix_z2" {
-  name = "vpc-zone2-cidr"
-  zone = "${var.zone2}"
-  vpc  = "${ibm_is_vpc.vpc1.id}"
-  cidr = "${var.zone2_prefix}"
-}
-
 
