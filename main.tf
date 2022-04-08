@@ -94,3 +94,11 @@ resource "ibm_is_vpc_address_prefix" "prefix_z1" {
   cidr = var.zone1_prefix
   is_default  = true
 }
+
+resource "ibm_is_vpc_address_prefix" "prefix_z2" {
+  name = "vpc-zone2-cidr"
+  zone = var.zone2
+  vpc  = ibm_is_vpc.vpc1.id
+  cidr = var.zone2_prefix
+  is_default  = true
+}
