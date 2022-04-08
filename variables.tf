@@ -95,7 +95,7 @@ variable "image" {
 }
 
 variable "profile" {
-  default = "bx2-2x8  "
+  default = "bx2-2x8"
   description = "Instance profile to be used for virtual instances"
 }
 
