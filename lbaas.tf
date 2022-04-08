@@ -38,7 +38,7 @@ resource "ibm_is_lb_pool" "webtier-lb-pool" {
 
 
 resource "ibm_is_lb_pool_member" "webtier-lb-pool-member-zone1" {
-  count          = ibm_is_instance.web-instancez01.count
+  count          = length(ibm_is_instance.web-instancez01)
   lb             = ibm_is_lb.webtier-lb.id
   pool           = "${element(split("/", ibm_is_lb_pool.webtier-lb-pool.id),1)}"
   port           = "80"
