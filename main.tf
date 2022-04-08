@@ -102,3 +102,44 @@ resource "ibm_is_vpc_address_prefix" "prefix_z2" {
   cidr = var.zone2_prefix
   is_default  = true
 }
+
+##############################################################################
+# Subnets for Zone 1 & Zone 2
+##############################################################################
+#--- subnets for web and db tier zone 1
+
+resource "ibm_is_subnet" "websubnet1" {
+  name            = "web-subnet-zone1"
+  vpc             = "${ibm_is_vpc.vpc1.id}"
+  zone            = "${var.zone1}"
+  ipv4_cidr_block = "${var.web_subnet_zone1}"
+  depends_on      = ["ibm_is_vpc_address_prefix.prefix_z1"]
+}
+
+
+resource "ibm_is_subnet" "dbsubnet1" {
+  name            = "db-subnet-zone1"
+  vpc             = "${ibm_is_vpc.vpc1.id}"
+  zone            = "${var.zone1}"
+  ipv4_cidr_block = "${var.db_subnet_zone1}"
+  depends_on      = ["ibm_is_vpc_address_prefix.prefix_z1"]
+}
+
+#--- subnets for web and db tier zone 2
+
+resource "ibm_is_subnet" "websubnet2" {
+  name            = "web-subnet-zone2"
+  vpc             = "${ibm_is_vpc.vpc1.id}"
+  zone            = "${var.zone2}"
+  ipv4_cidr_block = "${var.web_subnet_zone2}"
+  depends_on      = ["ibm_is_vpc_address_prefix.prefix_z2"]
+}
+
+
+resource "ibm_is_subnet" "dbsubnet2" {
+  name            = "db-subnet-zone2"
+  vpc             = "${ibm_is_vpc.vpc1.id}"
+  zone            = "${var.zone2}"
+  ipv4_cidr_block = "${var.db_subnet_zone2}"
+  depends_on      = ["ibm_is_vpc_address_prefix.prefix_z2"]
+}
