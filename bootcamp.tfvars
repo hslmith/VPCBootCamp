@@ -1,7 +1,7 @@
 ibmcloud_api_key=""
 prefix="bootcamp-multizone"
 region="us-south"
-resource_group="asset-development"
+resource_group="Default"
 classic_access=false
 subnets={ 
     zone-1 = [{ name = "subnet-a" cidr = "10.10.10.0/24" public_gateway = true }], 
