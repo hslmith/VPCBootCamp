@@ -221,7 +221,7 @@ resource "ibm_is_instance" "web-instancez02" {
 
 resource "ibm_is_instance" "db-instancez02" {
   count   = var.db_server_count
-  name    = "dbz01-${count.index+1}"
+  name    = "dbz02-${count.index+1}"
   image   = var.image
   profile = var.profile
 
